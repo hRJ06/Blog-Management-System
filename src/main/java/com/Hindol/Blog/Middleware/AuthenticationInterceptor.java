@@ -28,6 +28,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 }
                 else {
                     log.info("Token validation successful for user: {}", tokenValidationResultDTO.getEmail());
+                    request.setAttribute("gmail",tokenValidationResultDTO.getEmail());
                     return true;
                 }
             }

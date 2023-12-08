@@ -20,9 +20,7 @@ public class JWTToken {
     }
     public TokenValidationResultDTO validateToken(String token) {
         try {
-            System.out.println("HI 1");
             Claims claims = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody();
-            System.out.println("Heello" + claims);
             String email = claims.getSubject();
             return new TokenValidationResultDTO("Valid", email);
         }

@@ -7,6 +7,8 @@ import com.Hindol.Blog.Payload.PostDTO;
 import com.Hindol.Blog.Payload.PostResponse;
 import com.Hindol.Blog.Service.FileService;
 import com.Hindol.Blog.Service.PostService;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,15 +26,17 @@ public class PostController {
     @Autowired
     private FileService fileService;
     //    CREATE POST
-    @PostMapping("/user/{userId}/category/{categoryId}/v1/posts")
-    public ResponseEntity<PostDTO> createPost(@RequestBody PostDTO postDTO, @PathVariable Integer userId,@PathVariable Integer categoryId) {
-        PostDTO createPost = this.postService.createPost(postDTO,userId,categoryId);
+    @PostMapping("/category/{categoryId}")
+    public ResponseEntity<PostDTO> createPost(@RequestBody PostDTO postDTO, @PathVariable Integer categoryId, HttpServletRequest request) {
+        String gmail = (String)request.getAttribute("gmail");
+        PostDTO createPost = this.postService.createPost(postDTO,gmail,categoryId);
         return new ResponseEntity<PostDTO>(createPost, HttpStatus.CREATED);
     }
     //    GET POSTS BY USER;
-    @GetMapping("/user/{userId}/posts")
-    public ResponseEntity<List<PostDTO>> getPostsByUser(@PathVariable Integer userId) {
-        List<PostDTO> postDTOS = this.postService.getPostsByUser(userId);
+    @GetMapping("/user/posts")
+    public ResponseEntity<List<PostDTO>> getPostsByUser(HttpServletRequest request) {
+        String gmail = (String) request.getAttribute("gmail");
+        List<PostDTO> postDTOS = this.postService.getPostsByUser(gmail);
         return new ResponseEntity<List<PostDTO>>(postDTOS,HttpStatus.OK);
     }
     //    GET POSTS BY CATEGORY

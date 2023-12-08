@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PostService {
     //    CREATE
-    PostDTO createPost(PostDTO postDTO,Integer userId,Integer categoryId);
+    PostDTO createPost(PostDTO postDTO,String email,Integer categoryId);
     //    UPDATE
     PostDTO updatePost(PostDTO postDTO,Integer postId);
     //    DELETE
@@ -20,7 +20,7 @@ public interface PostService {
     //    GET ALL POSTS BY CATEGORY
     List<PostDTO> getPostsByCategory(Integer categoryId);
     //    GET ALL POSTS BY USER
-    List<PostDTO> getPostsByUser(Integer userId);
+    List<PostDTO> getPostsByUser(String email);
     //    SEARCH POSTS
     List<PostDTO> searchPosts(String keyword);
 }

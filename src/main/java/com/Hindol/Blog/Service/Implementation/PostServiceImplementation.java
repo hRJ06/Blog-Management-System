@@ -34,9 +34,9 @@ public class PostServiceImplementation implements PostService {
     private CategoryRepository categoryRepository;
 
     @Override
-    public PostDTO createPost(PostDTO postDTO,Integer userId,Integer categoryId) {
+    public PostDTO createPost(PostDTO postDTO,String email,Integer categoryId) {
         //        FIND THE USER
-        User user = this.userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User","User ID",userId));
+        User user = this.userRepository.findByEmail(email);
         //        FIND THE CATEGORY
         Category category = this.categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category","Category ID",categoryId));
         //        CREATE THE POST
@@ -107,8 +107,8 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
-    public List<PostDTO> getPostsByUser(Integer userId) {
-        User user = this.userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User","User ID",userId));
+    public List<PostDTO> getPostsByUser(String email) {
+        User user = this.userRepository.findByEmail(email);
         List<Post> posts = this.postRepository.findByUser(user);
         List<PostDTO> postDTOS = posts.stream().map((post) -> this.modelMapper.map(post, PostDTO.class)).collect(Collectors.toList());
         return postDTOS;

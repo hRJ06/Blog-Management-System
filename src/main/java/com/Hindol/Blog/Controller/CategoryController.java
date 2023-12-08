@@ -16,10 +16,9 @@ import java.util.List;
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
-
     @PostMapping("/")
     public ResponseEntity<CategoryDTO> createCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
-        CategoryDTO createdCategory =  this.categoryService.createCategory(categoryDTO);
+        CategoryDTO createdCategory = this.categoryService.createCategory(categoryDTO);
         return new ResponseEntity<>(createdCategory, HttpStatus.CREATED);
     }
     @PutMapping("/{catId}")
